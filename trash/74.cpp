@@ -1,28 +1,20 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72817681
-#include<bits/stdc++.h>
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72821736
+#include <bits/stdc++.h>
+
 #define ll long long
 #define ld long double
-#define pi acos(-1)
-#define mod 1000000009
-#define all(x) x.begin(), x.end()
+#define pb push_back
+#define pii pair<int, int>
+#define pll pair<ll, ll>
+#define pld pair<ld, ld>
+#define mp make_pair
+#define all(v) v.begin(), v.end()
+#define forn(i, n) for(int i = 0; i < n; i++)
 using namespace std;
 
-bool check(ll x, set<ll> &s){
-    while(x > 0 && s.size() > 0){
-        auto pos = s.lower_bound(x);
-        if(*pos == x){
-            s.erase(x);
-            return true;
-        }
-        pos--;
-        if(*pos > x){
-            return false;
-        }
-        x -= (*pos);
-        s.erase(*pos);
-    }
-    return (x == 0);
-}
+const ll inf = int(1e9 + 7);
+const double eps = 1e-7;
+const int maxn = int(2e5 + 10);
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -31,35 +23,61 @@ int main() {
 
     int t;
     cin >> t;
-    while(t--){
-        ll n, k;
+    while (t--) {
+        int n, k;
         cin >> n >> k;
-        ll a[n];
-        for(int i = 0; i < n; i++){
-            cin >> a[i];
+        vector<ll> v(n);
+        forn(i, n) {
+            cin >> v[i];
         }
-        sort(a, a + n);
-        set<ll> powers;
-        bool f = true;
-        ll val = 1;
-        while(val <= a[n - 1]){
-            powers.insert(val);
-            val = val * k;
-        }
-        for(int i= n - 1; i >= 0; i--){
-            if(check(a[i], powers) == false){
-                f = false;
-                break;
+
+        bool ok = true;
+//        bool ed = true;
+//        forn(i, n) {
+//            if((ed && d[i] - 1 % k == 0) || d[i] % k == 0) {
+//                if(ed && d[i] - 1 % k == 0) {
+//                    ed = false;
+//                    v.pb(d[i] - 1);
+//                } else {
+//                    v.pb(d[i]);
+//                }
+//            }
+//            else {
+//                ok = false;
+//                break;
+//            }
+//        }
+//
+//        if(!ok) {
+//            cout << "NO" << endl;
+//            continue;
+//        }
+
+        unordered_set<int> s;
+        for(int i = 0; i < v.size() && ok; i++) {
+            ll cur = v[i];
+            int cnt = 0;
+            while(cur > 0) {
+                while(cur % k == 0) {
+                    cur /= k;
+                    cnt++;
+                }
+                if(s.count(cnt) > 0) {
+                    ok = false;
+                    break;
+                }
+                s.insert(cnt);
+                cur--;
             }
         }
-        if(f){
-            cout << "YES";
-        }else{
-            cout << "NO";
+
+        if(!ok) {
+            cout << "NO" << endl;
+            continue;
         }
-        cout << endl;
+
+        cout << "YES" << endl;
     }
+
+    return 0;
 }
-
-
-

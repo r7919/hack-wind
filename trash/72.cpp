@@ -1,77 +1,65 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72822274
-﻿#include<iostream>
-
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72817681
 #include<bits/stdc++.h>
-
+#define ll long long
+#define ld long double
+#define pi acos(-1)
+#define mod 1000000009
+#define all(x) x.begin(), x.end()
 using namespace std;
-#define SWS ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
-typedef long long ll;
 
-const int MOD = (int)1e9 + 7;
-
-
-
+bool check(ll x, set<ll> &s){
+    while(x > 0 && s.size() > 0){
+        auto pos = s.lower_bound(x);
+        if(*pos == x){
+            s.erase(x);
+            return true;
+        }
+        pos--;
+        if(*pos > x){
+            return false;
+        }
+        x -= (*pos);
+        s.erase(*pos);
+    }
+    return (x == 0);
+}
 
 int main() {
-	int n;
-	cin >> n;
-	for (int i = 0; i < n; i++) {
-		long long sizee;
-		ll k;
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
 
-		bool Good = true;
-		cin >> sizee >>k;
-		vector<ll>Mas(sizee);
-		vector<bool>Dt(100 , true);
-
-
-		for (int i = 0; i < sizee; i++) {
-			cin >> Mas[i];
-		}
-
-		for (int i = 0; i < sizee; i++) {
-
-
-			ll temp = Mas[i];
-			vector<bool>Temp(100, true);
-			int its = 0;
-
-			while (temp > 1) {
-
-				if (temp % k > 1) {
-					Good = false;
-					break;
-				}
-				else if (temp % k == 1) {
-					Temp[its] = false;
-				}
-				its++;
-				temp = temp / k;
-			}
-			if( Mas[i] != 0)
-			Temp[its] = false;
-		
-			for (int i = 0; i <=its; i++) {
-				if (Temp[ i ] == false) {
-					if (Dt[i] == false) {
-						Good = false;
-						break;
-					}
-					else {
-						Dt[i] = false;
-					}
-				}
-			}
-
-			
-		}
-		if (Good == false) {
-			cout << "NO" << endl;
-		}
-		else { cout << "YES" << endl; }
-
-
-	}
-	//	system("pause");
-	return 0;
+    int t;
+    cin >> t;
+    while(t--){
+        ll n, k;
+        cin >> n >> k;
+        ll a[n];
+        for(int i = 0; i < n; i++){
+            cin >> a[i];
+        }
+        sort(a, a + n);
+        set<ll> powers;
+        bool f = true;
+        ll val = 1;
+        while(val <= a[n - 1]){
+            powers.insert(val);
+            val = val * k;
+        }
+        for(int i= n - 1; i >= 0; i--){
+            if(check(a[i], powers) == false){
+                f = false;
+                break;
+            }
+        }
+        if(f){
+            cout << "YES";
+        }else{
+            cout << "NO";
+        }
+        cout << endl;
+    }
 }
+
+
+

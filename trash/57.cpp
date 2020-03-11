@@ -1,68 +1,61 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72824158
-#include<bits/stdc++.h>
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72822547
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+#include <unordered_map>
+#include <algorithm>
+
+#define ullint unsigned long long int
+#define llint long long int
+
 using namespace std;
 
-using ll = long long;
-bool sortbysec(const pair<int,int> &a,const pair<int,int> &b){
-	if(a.second == b.second){
-		return (a.first < b.first);
-	} 
-    return (a.second < b.second); 
-} 
 int main(){
-	ll t;
-	cin >> t;
-
-	while(t--){
-		ll n,k;
-		cin >> n >> k;
-
-		vector<ll>v(n);
-		for(ll i=0;i<n;i++){
-			cin >> v[i];
-		}
-
-		vector<pair<ll,ll>>ans;
-		for(ll i=0;i<n;i++){
-			ll m=0;
-			while(v[i]!=0){
-				if(v[i]%k != 0){
-					ans.push_back(make_pair(v[i]%k,m));
-				}
-				v[i]=v[i]/k;
-				m++;
-			}
-		}
-		sort(ans.begin(),ans.end(),sortbysec);
-		// for(ll i=0;i<ans.size();i++){
-		// 	cout << ans[i].first << " " << ans[i].second << "\n";
-		// }
-		
-		int flag = 1;
-		if(ans.size()==0){
-			cout << "YES\n";
-			continue;
-		}
-		else{
-			for(ll i=0;i<ans.size();i++){
-				if(ans[i].first != 1){
-					flag = 0;
+	int T;cin>>T;
+	for(int t=0;t<T;t++){
+		int n,k;cin>>n>>k;
+		vector<ullint> arr;
+		unordered_map<int,bool> umap;
+		unordered_map<int,bool>::iterator uitr;
+		bool answer=true;
+		for(int i=0;i<n;i++){
+			ullint temp;cin>>temp;
+			//cout<<"temp:"<<temp<<endl;
+			//Now checkin the number representaion in basis of k
+			ullint power=0;
+			while(temp>0){
+				int rem=temp%k;
+				temp=temp/k;
+				//cout<<"power:"<<power<<" rem:"<<rem<<endl<<endl;
+				if(rem>1){
+					answer=false;
 					break;
 				}
-			}
-			for(ll i=1;i<ans.size();i++){
-				if(ans[i].second == ans[i-1].second){
-					flag = 0;
+				else if(rem==0){
+					power++;
+					continue;
+				}
+				//Now we have to see no other guy uses this power
+				uitr=umap.find(power);
+				if(uitr==umap.end()){
+					//This means that this power dont exist
+					umap[power]=true;
+				}
+				else{
+					answer=false;
 					break;
 				}
+
+				//incrementing the power
+				power++;
 			}
 		}
-
-		if(flag == 1){
-			cout << "YES\n";
+		if(answer==true){
+			cout<<"YES"<<endl;
 		}
 		else{
-			cout << "NO\n";
+			cout<<"NO"<<endl;
 		}
 	}
 	return 0;

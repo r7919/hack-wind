@@ -1,74 +1,145 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72820132
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72821134
+
+//naveen mall
 #include<bits/stdc++.h>
-#define ll long long
-#define MAXN 400005
-#define mod 1000000007
-#define INF 0x3f3f3f3f
-#define ld long double
 using namespace std;
-ll a[35];
+#define fast ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+#define pb               push_back
+#define sz(c)            (int)c.size()
+#define len(c)           (int)c.length()
+#define vec              vector
+#define int              long long int
+#define all(c)           c.begin(), c.end()
+#define rall(c)          c.rbegin(), c.rend()
+#define trav(a,i)        for(auto& i: a)
+#define fl(i,a,b) for(int i = (int)(a); i <= (int)(b); i++)
+#define rfl(i,a,b) for(int i = (int)(a); i >= (int)(b); i--)
+#define invect(v,n)       for(int i=0;i<n;i++ ){int arb;cin>>arb;v.pb(arb);}
+#define inset(s,n)        forloop(n){int aset;cin>>aset;s.insert(aset);}
+#define display(c)        trav(c,i) cout<<i<<" ";cout<<"\n";
+#define F                 first
+#define S                 second
+#define pii               pair<int,int>
+#define PB                pop_back
+#define endl              "\n"
+#define copy(a,b)         copy(all(a),back_inserter(b));
+#define section(a,b,w)    set_intersection(a.begin(), a.end(),b.begin(), b.end(),back_inserter(w));
+#define union(a,b,w)      set_union(a.begin(), a.end(),b.begin(), b.end(),back_inserter(w));
+#define diff(a,b,w)       set_difference(a.begin(), a.end(),b.begin(), b.end(),back_inserter(w));
+#define symdiff(a,b,w)    set_symmetric_difference(a.begin(), a.end(),b.begin(), b.end(),back_inserter(w));
 
-int main(){
-    ios::sync_with_stdio(false);
-    #define int ll
-    int T;
-    cin>>T;
-    while(T--){
-        int n,k;
-        cin>>n>>k;
-        for(int i=0;i<n;i++){
-            cin>>a[i];
-        }
-        ll b[35][100]={0};
-        bool y=1;
-        int num1=-1;
-        for(int i=0;i<n;i++){
-            int tp=a[i];
-            int tpp=0;
-            while(tp>0){
-                if(tp%k==1){
-                    b[i][tpp]+=1;
-                }
-                else if(tp%k==0){
+void solve()
+ {   int n,k;
+ 	cin>>n>>k;
+ 	vec<int> a;
+ 	invect(a,n)
+ 	vec<int> v(n);
+ 	
+    int co[100];
+    memset(co,0,sizeof(co));
 
-                }
-                else{
-                    y=0;break;
-                }
-                tpp+=1;
-                tp/=k;
-            }
-            if(!y)break;
-        }
-        if(!y){
-            cout<<"NO"<<endl;continue;
-        }
-        for(int i=0;i<100;i++){
-                bool yy=0;
-            for(int j=0;j<n;j++){
+ 	for(int i=0;i<n;i++)
+ 		 {
+          if(a[i]!=0)
+      	  {  int dc=-1;
+             while(a[i]!=0)
+             	  {     
+             	  	  if(a[i]%k==0 || a[i]%k==1)
+             	  	  	  { 
+                             if(a[i]%k==0)
+                             	  dc++;
+                             	else
+                             		{   dc++;
+                             		co[dc]++;
 
-                if(!yy&&b[j][i]==1){
-                    yy=1;
-                }
-                else if(b[j][i]==1){
-                    y=0;break;
-                }
-            }
+                             		}
 
-            if(!y){
-               break;
-            }
-        }
-        if(!y){
-            cout<<"NO"<<endl;continue;
-        }
-        else{
-            cout<<"YES"<<endl;
-        }
-
-    }
+                             		a[i]=a[i]/k;
 
 
-    return 0;
+
+
+             	  	  	  }
+             	  	  	  else 
+             	  	  	  	 {
+             	  	  	  	 	cout<<"NO"<<endl;
+             	  	  	  	 	  return ;
+             	  	  	  	 }
+
+
+
+
+             	  }
+      	  }
+
+
+ 		 }
+
+ 		// display(co)
+ 		 for(int i=0;i<100;i++)
+ 		 	 
+ 		 	 { if(co[i]>=2)
+ 		 	  	  {
+ 		 	  	  	cout<<"NO"<<endl;
+ 		 	  	  	  return;
+ 		 	  	  }
+
+
+
+
+              }
+
+
+
+
+    cout<<"YES"<<endl;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
+
+
+
+
+
+
+
+
+ 
+
+
+
+signed main()
+{fast
+	int t;
+	cin>>t;
+	while(t--)
+		 {
+		 	solve();
+		 }
 }
+
+
+
+
+
+
+
+
+
+
 

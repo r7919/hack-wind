@@ -1,69 +1,58 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72816987
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72819901
 #include <bits/stdc++.h>
-#include<ext/pb_ds/assoc_container.hpp>
+#include <vector>
+#define FASTIO ios::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 using namespace std;
-using namespace __gnu_pbds;
-typedef long long int ll;
-typedef tree<ll, null_type, less<ll>, rb_tree_tag,
-             tree_order_statistics_node_update>
-    indexed_set;
-ll mod=1000000007;
-
-
+typedef long long ll;
+double ch(double n,double base);
 int main()
 {
-ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    FASTIO;
+    ll ans=1e9+7;
+    ll an=1e9+7;
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        ll n,k;
+        cin>>n>>k;
+        ll a[n];
+        string s="YES";
+        map<ll,ll> g;
+        for(int i=0; i<n; cin>>a[i],i++);
+        for(int i=0; i<n&&s=="YES"; i++)
+        {
+            ll p=1;
+            while(p<=a[i]) p*=k;
+            while(a[i]>0)
+            {
+                if(a[i]>=p)
+                {
+                    a[i]-=p;
+                    if(g[ch(p,k)+1]==1)
+                    {
+                        s="NO";
 
-ll t;
-cin>>t;
-while(t--)
+                        break;
+                    }
+                    else g[ch(p,k)+1]=1;
+                }
+                p/=k;
+            }
+        }
+        cout<<s<<endl;
+    }
+    return 0;
+}
+
+double ch(double n,double base)
 {
-
-
-ll n,k;
-cin>>n>>k;
-
-ll a[n],i;
-
-for(i=0;i<n;i++)
-cin>>a[i];
-
-map<ll,ll>mp;
-
-for(i=0;i<n;i++)
-{
-ll val=a[i];
-ll ind=0;
-
-  while(val!=0)
-  {
-    mp[ind]+=val%k;
-    val/=k;
-    ind++;
-  }
-
+    ll i=0;
+    while(n>=base)
+    {
+        i++;
+        n/=base;
+    }
+    return i;
 }
-
-
-ll sw=0;
-
-for(auto it=mp.begin();it!=mp.end();it++)
-{
-  if((it->second)>1)
-   {
-     sw=1;
-      break;
-   }
-
-}
-
-if(sw==1)
-cout<<"NO"<<endl;
-else
-cout<<"YES"<<endl;
-}
-return 0;
-}
-
 

@@ -1,77 +1,78 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72823004
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72824866
 #include <bits/stdc++.h>
 
+#define int long long
+#define pb push_back
+
 using namespace std;
-#define lint long long int
-int main()
-{
-    lint t;
-    cin>>t;
-    while(t--) {
-        lint n, k;
-        cin>>n>>k;
-        lint a[n];
-        for(lint i=0;i<n;i++) {
-            cin>>a[i];
+
+const int N = 105;
+
+int t, n, k;
+int a[N], used[N];
+
+int get (int x) {
+    int cnt = 0;
+    while (x) {
+        x /= k;
+        cnt ++;
+    }return (cnt - 1);
+}
+
+void solve () {
+    cin >> n >> k;
+    for (int i = 1;i <= n;i ++) {
+        cin >> a[i];
+    }sort (a + 1, a + n + 1);
+    int cnt = 0;
+    for (int i = 0;i <= 100;i ++) {
+        used[i] = false;
+    }
+    for (int i = 1;i <= n;i ++) {
+        if (a[i] % k > 1) {
+            cout << "NO\n";
+            return;
         }
-        lint f = 0;
-        set<lint> s;
-        for(lint i=0;i<n;i++) {
-          // cout<<a[i] << " ";
-            if(a[i] == 0){
-                continue;
+        if (a[i] % k == 1)cnt ++;
+    }
+    if (cnt > 1) {
+        cout << "NO\n";
+        return;
+    }
+    for (int i = 1;i <= n;i ++) {
+        if (a[i] % k == 1)a[i] --;
+        if (!a[i])continue;
+        int in = a[i];
+        for (int j = get (a[i]);j >= 0;j --) {
+            int val = pow (k, j);
+            if (a[i] - val >= 0) {
+                a[i] -= val;
             }
-            if (a[i]%k != 0 ) {
-                a[i]--;
-                if (a[i]%k !=0){
-                    f=1;
-                    break;
-                }
-             //   cout<<1<<endl;
-                if (s.find(0) != s.end()) {
-                    f=1;
-                    break;
-                }
-                s.insert(0);
-                if(a[i] == 0){
-                    continue;
-                } 
-            } 
-            lint x = 0, ans = 0;
-            while(1) {
-                x=0;
-                while(a[i]%k == 0) {
-                    x++;
-                    a[i]/=k;
-                }
-                ans+=x;
-                a[i]--;
-                if (s.find(ans) != s.end()) {
-                    f=1;
-                    break;
-                }
-                s.insert(ans);
-               // cout<<ans<<endl;
-                if(a[i] == 0) {
-                    break;
-                } else {
-                    if (a[i] % k != 0){
-                        f=1;
-                        break;
+        }
+        if (!a[i]) {
+            a[i] = in;
+            for (int j = get (a[i]);j >= 0;j --) {
+                int val = pow (k, j);
+                if (a[i] - val >= 0) {
+                    a[i] -= val;
+                    if (used[j]) {
+                        cout << "NO\n";
+                        return;
                     }
+                    used[j] = true;
                 }
-            } 
-            if(f==1){
-                break;
             }
-         //   cout<<endl; 
-        }
-        if(f == 1){
-            cout<<"NO"<<endl;
-        } else {
-            cout<<"YES"<<endl;
+        }else {
+            cout << "NO\n";
+            return;
         }
     }
+    cout << "YES\n";
+}
+
+main () {
+    cin >> t;
+    while (t --) solve ();
     return 0;
 }
 

@@ -1,54 +1,74 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72820352
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72820132
 #include<bits/stdc++.h>
+#define ll long long
+#define MAXN 400005
+#define mod 1000000007
+#define INF 0x3f3f3f3f
+#define ld long double
 using namespace std;
-int main()
-{
-    int t;
-    cin>>t;
-    while(t--)
-    {
-        int n;
-        long long int k;
+ll a[35];
+
+int main(){
+    ios::sync_with_stdio(false);
+    #define int ll
+    int T;
+    cin>>T;
+    while(T--){
+        int n,k;
         cin>>n>>k;
-        long long int m=0;
-        long long int e=1;
-        long long int a[31];
-        for(int i=0;i<n;i++)
-        {
+        for(int i=0;i<n;i++){
             cin>>a[i];
         }
-        bool z=0;
-        for(int i=0;i<n;i++)
-        {
-            for(int o=0;a[i]!=0;o++)
-            {
-                if(a[i]%k==0)
-                {
-                    a[i]=a[i]/k;
+        ll b[35][100]={0};
+        bool y=1;
+        int num1=-1;
+        for(int i=0;i<n;i++){
+            int tp=a[i];
+            int tpp=0;
+            while(tp>0){
+                if(tp%k==1){
+                    b[i][tpp]+=1;
                 }
-                else if(a[i]%k==1)
-                {
-                    if(m&(e<<o))
-                    {
-                        z=1;
-                        break;
-                    }
-                    else
-                    {
-                        m|=(e<<o);
-                        a[i]=(a[i]-1)/k;
-                    }
+                else if(tp%k==0){
+
                 }
-                else
-                {
-                    z=1;
-                    break;
+                else{
+                    y=0;break;
+                }
+                tpp+=1;
+                tp/=k;
+            }
+            if(!y)break;
+        }
+        if(!y){
+            cout<<"NO"<<endl;continue;
+        }
+        for(int i=0;i<100;i++){
+                bool yy=0;
+            for(int j=0;j<n;j++){
+
+                if(!yy&&b[j][i]==1){
+                    yy=1;
+                }
+                else if(b[j][i]==1){
+                    y=0;break;
                 }
             }
-            if(z)break;
+
+            if(!y){
+               break;
+            }
         }
-        if(z)cout<<"NO\n";
-        else cout<<"YES\n";
+        if(!y){
+            cout<<"NO"<<endl;continue;
+        }
+        else{
+            cout<<"YES"<<endl;
+        }
+
     }
+
+
+    return 0;
 }
 

@@ -1,73 +1,52 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72823544
-// ConsoleApplication10.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72819211
+#include <bits/stdc++.h>
 
-#include <iostream>
-#include<algorithm>
-#include<map>
-#include<cstring>
 using namespace std;
-int vis[4000];
-int max_t = 0;
-long long int sum[400];
-long long int pre[400];
-int main()
+
+#define int long long
+
+signed main()
 {
-	std::ios::sync_with_stdio(false);
-	cin.tie();
-	int n, k;
-	int T;
-	cin >> T;
-	while (T--)
-	{
-		cin >> n >> k;
-		bool d=true;
-		memset(vis,0, sizeof(vis));
-		for (int i = 0; i < n; i++)
-		{
-			cin >> sum[i];
-		}
-		long long int t = 1, maxn = 0;
-		pre[0] = 1;
-		long long int s = 1;
-		while (1)
-		{
-			t *= k;
-			pre[s] = t;
-			maxn = s;
-			if (t > 999999999999999999)
-				break;
-			s++;
-		}
-		for (int i = 0; i < n; i++)
-		{
-			if (sum[i] == 0)
-				continue;
-			long long int now = 0;
-			for (long long int j = 0; j <= maxn; j++)
-			{
-				if (pre[j] > sum[i])
-				{
-					now = j - 1;
-					break;
-				}
-			}
-			long long ha = sum[i];
-			for (long long j = now; j >= 0; j--)
-			{
-				if (!vis[j] && ha >= pre[j])
-				{
-					ha -= pre[j];
-					vis[j] = 1;
-				}
-			}
-			if (ha > 0)
-				d = false;
-		}
-		if (d == true)
-			cout << "YES" << endl;
-		else
-			cout << "NO" << endl;
-	}
+    int t;
+    cin >> t;
+    for (int _ = 0; _ < t; ++_) {
+        int n, k;
+        cin >> n >> k;
+        vector<int> a(n);
+        vector<vector<int>> res;
+        vector<bool> used(100, false);
+        bool bl = true;
+        for (int i = 0; i < n; ++i) {
+            int x;
+            cin >> x;
+            if (!bl) continue;
+            vector<int> opa;
+            if (x == 0) continue;
+            int nw = 1;
+            int cnt = 0;
+            while (x > nw) {
+                nw *= k;
+                ++cnt;
+            }
+            for (int j = cnt; j >= 0; --j) {
+                if (x / nw == 1) {
+                    x %= nw;
+                    if (used[cnt]) {
+                        bl = false;
+                        break;
+                    }
+                    used[cnt] = true;
+                } else if (x / nw > 1) {
+                    bl = false;
+                    break;
+                }
+                --cnt;
+                nw /= k;
+            }
+        }
+        if (bl) cout << "YES\n";
+        else cout << "NO\n";
+    }
+    return 0;
 }
 

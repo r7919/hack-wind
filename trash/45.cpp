@@ -1,88 +1,39 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72820937
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72821662
 #include <bits/stdc++.h>
 using namespace std;
-using lint = long long;
-using pint = pair<int, int>;
-using vi = vector<lint>;
-#define rep(i, n) for(int i = 0; i < (int)(n); i++)
-#define all(v) v.begin(), v.end()
-#define endl "\n"
-
-constexpr int MOD = 1000000007;
-const int INF = 1 << 30;
-
-long long modpow(long long a, long long n) {
-    long long res = 1;
-    while (n > 0) {
-        if (n & 1) res = res * a;
-        a = a * a;
-        n >>= 1;
-    }
-    return res;
+int main()
+{
+	long long t, n, k;
+	cin >> t;
+	for(int i = 0; i < t; i++)
+	{
+		queue<long long>q;
+		long long mas[60] = {0};
+		int f = 0;
+		cin >> n >> k;
+		long long *a;
+		a = new long long[n];
+		for(int j = 0; j < n; j++)cin >> a[j];
+		for(int j = 0; j < n; j++)
+		{
+			long long l = a[j];
+			while(l)
+			{
+				q.push(l % k);
+				l/=k;
+			}
+			int z = 0;
+			while(!q.empty())
+			{
+				mas[z] += q.front();
+				if(mas[z] > 1){ f = 1; break;}
+				q.pop();
+				z++;
+			}
+			
+		}
+		if(f == 1)cout << "NO" << endl;
+		if(f == 0) cout << "YES" << endl;
+	}
 }
 
-int main() {
-    int t;
-    cin >> t;
-
-    rep(_, t) {
-        int n, k;
-        cin >> n >> k;
-        vi a(n);
-        rep(i, n) cin >> a[i];
-
-        vi b(n, 0);
-
-        lint s = 0;
-        lint m = -1;
-        rep(i, n) {
-            s += a[i];
-            m = max(m, a[i]);
-        }
-        m *= 8;
-        
-        vi kp(64, -1);
-        rep(i, 64) {
-            kp[i] = modpow(k, i);
-            if (kp[i] > m) break;
-        }
-
-        rep(i, n) {
-            for (int j = 63; j >= 0; j--) {
-                if (kp[j] == -1) continue;
-                if (kp[j] <= a[i]) {
-                    a[i] -= kp[j];
-                    b[i] |= 1LL << j;
-                }
-            }
-        }
-
-        bool f = false;
-
-        rep(i, n) {
-            if (a[i] > 0) f = true;
-        }
-
-        if (f) {
-            cout << "NO" << endl;
-            continue;
-        }
-
-        rep(i, 64) {
-            int c = 0;
-            lint o = 1LL << i;
-            rep(j, n) {
-                if (b[j] & o) c++;
-            }
-            if (c >= 2) f = true;
-        }
-
-        if (f) {
-            cout << "NO" << endl;
-        }
-        else {
-            cout << "YES" << endl;
-        }
-    }
-    return 0;
-}

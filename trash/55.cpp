@@ -1,78 +1,46 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72824866
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72824860
 #include <bits/stdc++.h>
-
-#define int long long
-#define pb push_back
-
 using namespace std;
 
-const int N = 105;
-
-int t, n, k;
-int a[N], used[N];
-
-int get (int x) {
-    int cnt = 0;
-    while (x) {
-        x /= k;
-        cnt ++;
-    }return (cnt - 1);
-}
-
-void solve () {
-    cin >> n >> k;
-    for (int i = 1;i <= n;i ++) {
-        cin >> a[i];
-    }sort (a + 1, a + n + 1);
-    int cnt = 0;
-    for (int i = 0;i <= 100;i ++) {
-        used[i] = false;
-    }
-    for (int i = 1;i <= n;i ++) {
-        if (a[i] % k > 1) {
-            cout << "NO\n";
-            return;
-        }
-        if (a[i] % k == 1)cnt ++;
-    }
-    if (cnt > 1) {
-        cout << "NO\n";
-        return;
-    }
-    for (int i = 1;i <= n;i ++) {
-        if (a[i] % k == 1)a[i] --;
-        if (!a[i])continue;
-        int in = a[i];
-        for (int j = get (a[i]);j >= 0;j --) {
-            int val = pow (k, j);
-            if (a[i] - val >= 0) {
-                a[i] -= val;
-            }
-        }
-        if (!a[i]) {
-            a[i] = in;
-            for (int j = get (a[i]);j >= 0;j --) {
-                int val = pow (k, j);
-                if (a[i] - val >= 0) {
-                    a[i] -= val;
-                    if (used[j]) {
-                        cout << "NO\n";
-                        return;
-                    }
-                    used[j] = true;
-                }
-            }
-        }else {
-            cout << "NO\n";
-            return;
-        }
-    }
-    cout << "YES\n";
-}
-
-main () {
-    cin >> t;
-    while (t --) solve ();
-    return 0;
+using LL = long long;
+int main() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	int t;
+	cin >> t;
+	while (t--) {
+		int n, k;
+		cin >> n >> k;
+		LL v = 1;
+		while (v <= LONG_LONG_MAX / k)
+			v *= k;
+		vector<LL> numbers;
+		bool flag = true;
+		for (int i = 0; i < n; i++) {
+			long long a;
+			cin >> a;
+			LL temp = v;
+			while (temp > 0) {
+				if (temp <= a) {
+					LL d = a / temp;
+					if (d > 1) {
+						flag = false;
+					}
+					a -= temp;
+					numbers.push_back(temp);
+				}
+				temp /= k;
+			}
+			if(a) flag = false;
+		}
+		sort(numbers.begin(), numbers.end());
+	//	for(int i = 0; i < numbers.size(); i ++) cout << numbers[i] << endl;
+		for (int i = 1; i < numbers.size(); i++) {
+			if (numbers[i] == numbers[i - 1])
+				flag = false;
+		}
+		printf("%s\n", flag ? "YES" : "NO");
+	}
+	return 0;
 }
 

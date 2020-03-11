@@ -1,128 +1,68 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72821371
-#include <bits/stdc++.h>
-
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72821337
+#include<bits/stdc++.h>
 using namespace std;
+typedef long long int ll;
+typedef vector<int> vec;
+typedef vector< pair<int, int> > vecp;
+#define MP make_pair
+#define PB push_back
+#define F first 
+#define int long long 
+#define S second
+#define Runner_up ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+#define all(v) v.begin(), v.end()
+//-----------------------------------------------------------------------------------
 
-template <typename A, typename B>
-string to_string(pair<A, B> p);
- 
-template <typename A, typename B, typename C>
-string to_string(tuple<A, B, C> p);
- 
-template <typename A, typename B, typename C, typename D>
-string to_string(tuple<A, B, C, D> p);
- 
-string to_string(const string& s) {
-  return '"' + s + '"';
-}
- 
-string to_string(const char* s) {
-  return to_string((string) s);
-}
- 
-string to_string(bool b) {
-  return (b ? "true" : "false");
-}
- 
-string to_string(vector<bool> v) {
-  bool first = true;
-  string res = "{";
-  for (int i = 0; i < static_cast<int>(v.size()); i++) {
-    if (!first) {
-      res += ", ";
-    }
-    first = false;
-    res += to_string(v[i]);
-  }
-  res += "}";
-  return res;
-}
- 
-template <size_t N>
-string to_string(bitset<N> v) {
-  string res = "";
-  for (size_t i = 0; i < N; i++) {
-    res += static_cast<char>('0' + v[i]);
-  }
-  return res;
-}
- 
-template <typename A>
-string to_string(A v) {
-  bool first = true;
-  string res = "{";
-  for (const auto &x : v) {
-    if (!first) {
-      res += ", ";
-    }
-    first = false;
-    res += to_string(x);
-  }
-  res += "}";
-  return res;
-}
- 
-template <typename A, typename B>
-string to_string(pair<A, B> p) {
-  return "(" + to_string(p.first) + ", " + to_string(p.second) + ")";
-}
- 
-template <typename A, typename B, typename C>
-string to_string(tuple<A, B, C> p) {
-  return "(" + to_string(get<0>(p)) + ", " + to_string(get<1>(p)) + ", " + to_string(get<2>(p)) + ")";
-}
- 
-template <typename A, typename B, typename C, typename D>
-string to_string(tuple<A, B, C, D> p) {
-  return "(" + to_string(get<0>(p)) + ", " + to_string(get<1>(p)) + ", " + to_string(get<2>(p)) + ", " + to_string(get<3>(p)) + ")";
-}
-
-vector<long long> pow_counts(100);
-
-void get_pow_counts(long long n, int p){
-  int cnt = 0;
-
-  while(n > 0){
-    pow_counts[cnt] += n % p;
-
-    cnt++;
-    n /= p;
-  }
-
-}
-
-int main(){
-
-  int t;
-  cin >> t;
-
-  while(t--){
-    int n, k;
-    cin >> n >> k;
-    vector<long long> NADO(n);
-
-    for(auto &x: NADO) cin >> x;
-
-    pow_counts = vector<long long>(100);
-
-    for(auto x : NADO) get_pow_counts(x, k);
-
-    bool flag = true;
-    for(auto x : pow_counts){
-      if(x > 1){
-        flag = false;
-        break;
-      }
-    }
-    if(flag){
-      cout << "YES\n";
-    }else{
-      cout << "NO\n";
-    }
-  }
-
-
-
-  return 0;
+signed main()
+{	
+	Runner_up
+	int t; cin>>t;
+	while(t--){
+		int n, k; cin>>n>>k;
+		int a[n];
+		ll sum=0;
+		vector <ll> v;
+		for(int i=0; i<n; i++){
+			cin>>a[i]; sum+=a[i];
+		}
+		sort(a, a+n);
+		ll z=0;
+		ll c=0; map < ll, ll> m;
+		while(z < sum){
+			z=pow(k, c);
+			v.PB(z); c++; 
+		}
+		int flag=1;
+		for(int i=0; i<n; i++){
+			if(a[i]==0) continue;
+			int ind=0;
+			while(v[ind] < a[i]) ind++;
+			if(v[ind] > a[i]) ind--;
+			if(ind<0) {
+				flag=0; break;
+			}
+			while(true){
+				if(a[i]==0) break;
+				while(v[ind] > a[i] && ind > 0 ) ind--;
+				if(v[ind] > a[i]) {
+					flag=0; break;
+				}
+				if(!m[v[ind]]) {
+					a[i]-=v[ind];m[v[ind]]=1;
+				}else{
+					flag=0; break;
+				}
+			}
+			if(flag==0) break;
+		}
+		for(int i=0; i<n; i++) {
+			if(a[i]) {
+			flag=0; break;
+			}
+		}
+		if(flag) cout<<"YES"<<endl; else cout<<"NO"<<endl;
+		
+	}
+	return 0;
 }
 

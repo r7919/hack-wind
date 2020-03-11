@@ -1,46 +1,56 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72822796
-#include<bits/stdc++.h>
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72821803
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+#include<cstring>
+#include<map>
 using namespace std;
-typedef long long ll;
-
-
-bool base(ll num, ll b, bool ranks[100]){
-    if(num == 0) return true;
-    int count = -1;
-    while(num != 0){
-        count++;
-        if(num % b == 0){ num/=b; continue; }
-        if(num % b == 1 && ranks[count] == true) return false;
-        if(num % b == 1){ num/=b; ranks[count] = true; continue;}
-        else return false;
-
-    }
-    return true;
-}
-
-int main(){
-    int t;
-    cin>>t;
-    for(int i =0; i< t ;i++){
-        ll n, k;
-        bool ranks[100];
-        for(int j=0; j<100; j++) ranks[j] = false;
-        cin>>n>>k;
-        vector<ll> v;
-        ll sum = 0;
-        for(int j=0; j<n; j++){
-            ll temp;
-            cin>>temp;
-            v.push_back(temp);
-            sum+= temp;
-        }
-        bool answer = true;
-        for( auto el : v){
-            answer &= base(el, k, ranks);
-        }
-        if(answer)  cout<<"YES\n";
-        else cout<<"NO\n";
-    }
-
-    return 0;
+int t,n,k,cnt;
+long long a[110],x;
+long long z[110];
+int jz[110],g[110];
+bool u[110];
+int main()
+{
+	cin>>t;
+	while(t--)
+	{
+		bool f=0;
+		memset(u,0,sizeof(u));
+		cin>>n>>k;
+		x=1,cnt=-1;
+		for(int i=1;i<=n;i++)
+		cin>>a[i];
+		for(int i=1;i<=n;i++)
+		{
+			int j=0;
+		    while(a[i]>0)
+		    {
+			    jz[j]=a[i]%k;
+		    	a[i]/=k;
+		    	if(jz[j]!=0&&jz[j]!=1)
+		    	{
+		    		f=1;
+		    		break;
+				}
+				else if(jz[j]==1)
+				{
+					if(u[j]==1)
+					{
+						f=1;
+						break;
+					}
+					u[j]=1;
+				}
+		    	j++;
+			}
+			if(f==1)
+			break;
+		}
+		if(f==1)
+		cout<<"NO"<<endl;
+		else
+		cout<<"YES"<<endl;
+	}
+	return 0;
 }

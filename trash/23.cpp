@@ -1,37 +1,58 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72819325
-#include <bits/stdc++.h>
-#define ll long long
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72817739
+#include<iostream>
+#include<cstring>
 
 using namespace std;
 
-int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(NULL), cout.tie(NULL);
+#define INF 1e10+5
+#define MAXN 105
+#define MINN -105
+typedef long long int LL;
+LL a[MAXN],b[MAXN];
+LL n,k;
+bool ok;
+void check(LL& i,LL j,LL cur)
+{
+    if(cur>i)return;
+    check(i,j+1,cur*k);
+    if(cur<=i)
+    {
+        i-=cur;
+        b[j]++;
+        if(b[j]>=2){ok=0;return;}
+    }
+}
+
+void solve()
+{
+    memset(b,0,sizeof(b));
+    cin>>n>>k;
+    for(int i=0;i<n;i++)
+        cin>>a[i];
+    for(int i=0;i<n;i++)
+    {
+        ok=1;
+        if(!a[i])continue;
+        check(a[i],0,1);
+        if(a[i])ok=0;
+        if(!ok)
+        {
+            cout<<"NO"<<endl;
+            return;
+        }
+    }
+
+    cout<<"YES"<<endl;
+}
+
+
+int main()
+{
     int t;
-    cin >> t;
-    while (t--) {
-        int n, k;
-        cin >> n >> k;
-        vector<long long> m;
-        long long x = 1;
-        while (x <= 1e16) {
-            m.push_back(x);
-            x *= k;
-        }
-        vector<bool> used(m.size(), 0);
-        bool ok = 1;
-        for (int i = 0; i < n; ++i) {
-            long long x;
-            cin >> x;
-            for (int j = m.size() - 1; j >= 0; --j) {
-                if (m[j] <= x && !used[j]) {
-                    x -= m[j];
-                    used[j] = 1;
-                }
-            }
-            if (x != 0) ok = 0;
-        }
-        cout << (ok ? "YES" : "NO") << endl;
+    cin>>t;
+    for(int i=0;i<t;i++)
+    {
+        solve();
     }
     return 0;
 }

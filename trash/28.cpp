@@ -1,48 +1,77 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72817967
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72814583
 #include<bits/stdc++.h>
-#define LL long long
-#define ms(s) memset(s, 0, sizeof(s))
 using namespace std;
+#define ll long long 
+#define ss second
+#define ff first
+#define pb push_back
+#define mkp mak
+#define pll pair<long long, long long>
+#define FIO ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
 
-int main() {
-    // freopen("in.txt", "r", stdin);
-    // freopen("out.txt", "w", stdout);
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    int t;
-    cin >> t;
-    while(t--) {
-        LL n, k;
-        cin >> n >> k;
-        LL tt = 1;
-        map<LL, LL> m1;
-        LL d = pow(10, 16);
-        vector<LL> vec;
-        //cout << "ok" << endl;
-        while(tt <= d) {
-            vec.push_back(tt);
-            m1[tt] = 0;
-            tt *= k;
-        } 
-        sort(vec.begin(), vec.end(), greater<LL>());
-        //cout << "ok" << endl;
-        bool flag = false;
-        for(int i = 0; i < n; i++) {
-            LL x;
-            cin >> x;
-            while(x) {
-                LL temp = lower_bound(vec.begin(), vec.end(), x, greater<LL>()) - vec.begin();
-                // cout << vec[temp] << endl;
-                if(!m1.count(vec[temp]) || m1[vec[temp]] == 1) {
-                    flag = true;
+ll lim = 3e16+5;
+const int mod = 1e9+7;
+
+ll n,m,t,k;
+
+ll Power(ll a, ll b)
+{
+    if(a==0)
+        return 0;
+    if(b==0)
+        return 1;
+    ll ans=Power((a*a)%mod,b/2);
+    if(b&1)
+        return (a*ans)%mod;
+    return ans%mod;
+}
+ll Inv(ll a)
+{
+    return Power(a,mod-2);
+}
+
+ll dx[] = {1,-1,0,0};
+ll dy[] = {0,0,1,-1};
+int main()
+{
+    FIO
+    cin>>t;
+    //t = 1;
+    while(t--)
+    {
+        cin>>n>>m;
+        vector<ll> v(n);
+        for(int i=0;i<n;i++)
+            cin>>v[i];
+        vector<ll> h(64,0);
+        bool flag = 1;
+        for(int i=0;i<n;i++)
+        {
+            while(v[i])
+            {
+                int cnt = 0;
+                ll tmp = 1;
+                while(tmp*m <= v[i])
+                {
+                    tmp *= m;
+                    cnt++;
+                }
+                h[cnt]++;
+                if(h[cnt] > 1)
+                {
+                    flag = 0;
                     break;
-                } 
-                m1[vec[temp]]++;
-                x -= vec[temp];
+                }
+                v[i] -= tmp;
             }
+            if(flag == 0)
+                break;
         }
-        if(flag) cout << "NO" << endl;
-        else cout << "YES" << endl;
+        if(flag == 0)
+            cout<<"NO\n";
+        else
+            cout<<"YES\n";
     }
     return 0;
 }
+

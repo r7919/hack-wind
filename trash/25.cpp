@@ -1,59 +1,42 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72817739
-#include<iostream>
-#include<cstring>
-
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72819416
+#include<bits/stdc++.h>
 using namespace std;
-
-#define INF 1e10+5
-#define MAXN 105
-#define MINN -105
-typedef long long int LL;
-LL a[MAXN],b[MAXN];
-LL n,k;
-bool ok;
-void check(LL& i,LL j,LL cur)
-{
-    if(cur>i)return;
-    check(i,j+1,cur*k);
-    if(cur<=i)
-    {
-        i-=cur;
-        b[j]++;
-        if(b[j]>=2){ok=0;return;}
-    }
-}
-
-void solve()
-{
-    memset(b,0,sizeof(b));
-    cin>>n>>k;
-    for(int i=0;i<n;i++)
-        cin>>a[i];
-    for(int i=0;i<n;i++)
-    {
-        ok=1;
-        if(!a[i])continue;
-        check(a[i],0,1);
-        if(a[i])ok=0;
-        if(!ok)
-        {
-            cout<<"NO"<<endl;
-            return;
-        }
-    }
-
-    cout<<"YES"<<endl;
-}
-
-
+long long a[40];
+long long ci[101];
+int t,n,k;
 int main()
 {
-    int t;
-    cin>>t;
-    for(int i=0;i<t;i++)
-    {
-        solve();
-    }
-    return 0;
-}
+	cin>>t;
+	while(t--)
+	{
+		memset(a,0,sizeof(a));
+		memset(ci,0,sizeof(ci));
+		cin>>n>>k;
+		int flag=0;
+		for(int i=1; i<=n; i++)
+		{
+			cin>>a[i];
+			int j=0;
+			while(a[i]>0)
+			{
+				ci[j]+=a[i]%k;
+				a[i]/=k;
+				j++;
+			}
+		}
+		for(int i=0; i<=100; i++)
+		{
+			if(ci[i]>1)
+				flag=1;
+		}
+		if(flag==1)
+		{
+			cout<<"NO"<<endl;
+			continue;
+		}
+		else
+			cout<<"YES"<<endl;
+	}
 
+	return 0;
+}

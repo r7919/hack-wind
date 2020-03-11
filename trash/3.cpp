@@ -1,66 +1,43 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72818264
-#include <iostream>
-#include <cstring>
-#include <cstdio>
-#include <algorithm>
-#include <queue>
-#include <cmath>
-
-#define int long long
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72817869
+#include<bits/stdc++.h>
 using namespace std;
-const int maxn = 1e6 + 7;
-int a[maxn];
-bool vis[maxn];
 
-signed main(){
-    int cas;
-    scanf("%lld", &cas);
-    while (cas --){
-        memset(vis, false, sizeof (vis));
-        
-        int n, k;
-        scanf("%lld%lld", &n, &k);
-        for (int i=1; i<=n; i++) scanf("%lld", &a[i]);
-        bool flag = false;
-        
-        for (int i=1; i<=n; i++){
-            if (!a[i]) continue;
-            else if (a[i] == 1){
-                if (vis[0]) {
-                    flag = true; break;
-                }
-                vis[0] = true;
-            }else {
-                int tmp = a[i], p = 0;
-                while (tmp){
-                    int yu = tmp % k;
-                    tmp /= k;
-                    if (yu != 1 && yu){
-                        flag = true; break;
-                    }else if (!yu) {
-                        p++; continue;
-                    }else{
-                        if (vis[p]){
-                            flag = true; break;
+int main()
+{
+      int t,i,j;
+      cin>>t;
+      while(t--){
+            int n;
+            long long int k;
+            cin>>n>>k;
+            long long int ara[n];
+            for(i=0;i<n;i++) cin>>ara[i];
+            bool is=true;
+            while(1){
+                  int cnt=0;
+                  int x=0;
+                  for(i=0;i<n;i++){
+                        if(ara[i]%k==1){
+                              x++;
+                              ara[i]--;
+                              ara[i]/=k;
                         }
-                        vis[p] = true;
-                        p++;
-                    }
-                }
+                        else if(ara[i]==0) cnt++;
+                        else if(ara[i]%k==0){
+                              ara[i]/=k;
+                        }
+                        else{
+                              is=false;
+                              break;
+                        }
+                  }
+                  if(x>1) is=false;
+                  if(cnt==n) break;
+                  if(!is) break;
             }
-            
-            if (flag) break;
-        }
-//
-//        for (int j=0; j<=6; j++){
-//            if (vis[j]) printf("%d ", j);
-//        }
-//        printf("\n");
-        
-        if (flag) printf("NO\n");
-        else printf("YES\n");
-    }
-    
-    return 0;
+            if(!is) cout<<"NO"<<endl;
+            else cout<<"YES"<<endl;
+      }
+      return 0;
 }
 

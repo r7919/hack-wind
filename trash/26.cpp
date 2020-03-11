@@ -1,60 +1,38 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72818062
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72819325
 #include <bits/stdc++.h>
+#define ll long long
+
 using namespace std;
 
-typedef long long ll;
-
-const int N = 1e3 + 4;
-
-int n, k;
-ll cnt[N];
-
-void getDegs(ll x){
-    vector <ll> a;
-
-    while (x >= k){
-        ll cur = x / (ll)k;
-        ll cur2 = cur * (ll)k;
-        a.push_back(x - cur2);
-        x = cur;
-    }
-    a.push_back(x);
-
-    for (int i = 0; i < a.size(); ++i){
-        cnt[i] += a[i];
-    }
-}
-
-void solve(){
-    cin >> n >> k;
-    memset(cnt, 0, N * sizeof(int));
-
-    for (int i = 0; i < n; ++i){
-        ll x;
-        cin >> x;
-        getDegs(x);
-    }
-
-    for (int i = 0; i < N; ++i){
-        if (cnt[i] > 1){
-            cout << "NO\n";
-            return;
-        }
-    }
-    cout << "YES\n";
-}
-
-int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
-
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(NULL), cout.tie(NULL);
     int t;
     cin >> t;
-
-    for (int i = 0; i < t; ++i){
-        solve();
+    while (t--) {
+        int n, k;
+        cin >> n >> k;
+        vector<long long> m;
+        long long x = 1;
+        while (x <= 1e16) {
+            m.push_back(x);
+            x *= k;
+        }
+        vector<bool> used(m.size(), 0);
+        bool ok = 1;
+        for (int i = 0; i < n; ++i) {
+            long long x;
+            cin >> x;
+            for (int j = m.size() - 1; j >= 0; --j) {
+                if (m[j] <= x && !used[j]) {
+                    x -= m[j];
+                    used[j] = 1;
+                }
+            }
+            if (x != 0) ok = 0;
+        }
+        cout << (ok ? "YES" : "NO") << endl;
     }
-
     return 0;
 }
 

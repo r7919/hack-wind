@@ -1,79 +1,73 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72822054
-#include <bits/stdc++.h>
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72823544
+// ConsoleApplication10.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
+//
 
+#include <iostream>
+#include<algorithm>
+#include<map>
+#include<cstring>
 using namespace std;
-
-const int INF = 1e9;
-const int N = 1e4;
-const int MOD = 998244353;
-const double EPS = 1e-6;
-
-const double PI = acos(-1);
-
-map<int, int> cnt;
-int k;
-
-bool getPowers(long long x) {
-    long long sum = 1;
-    long long add = 1;
-    int pow = 0;
-    while (sum < x) {
-        add *= k;
-        pow++;
-        sum += add;
-    }
-    map<int, int> mp;
-    while (true) {
-        if (add <= x) {
-            x -= add;
-            mp[pow]++;
-        }
-        if (add == 1)
-            break;
-        add /= k;
-        pow--;
-    }
-    if (x != 0)
-        return false;
-    for (auto el : mp) {
-        cnt[el.first] += el.second;
-    }
-    return true;
+int vis[4000];
+int max_t = 0;
+long long int sum[400];
+long long int pre[400];
+int main()
+{
+	std::ios::sync_with_stdio(false);
+	cin.tie();
+	int n, k;
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		cin >> n >> k;
+		bool d=true;
+		memset(vis,0, sizeof(vis));
+		for (int i = 0; i < n; i++)
+		{
+			cin >> sum[i];
+		}
+		long long int t = 1, maxn = 0;
+		pre[0] = 1;
+		long long int s = 1;
+		while (1)
+		{
+			t *= k;
+			pre[s] = t;
+			maxn = s;
+			if (t > 999999999999999999)
+				break;
+			s++;
+		}
+		for (int i = 0; i < n; i++)
+		{
+			if (sum[i] == 0)
+				continue;
+			long long int now = 0;
+			for (long long int j = 0; j <= maxn; j++)
+			{
+				if (pre[j] > sum[i])
+				{
+					now = j - 1;
+					break;
+				}
+			}
+			long long ha = sum[i];
+			for (long long j = now; j >= 0; j--)
+			{
+				if (!vis[j] && ha >= pre[j])
+				{
+					ha -= pre[j];
+					vis[j] = 1;
+				}
+			}
+			if (ha > 0)
+				d = false;
+		}
+		if (d == true)
+			cout << "YES" << endl;
+		else
+			cout << "NO" << endl;
+	}
 }
 
-
-int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0), cout.tie(0);
-    int t;
-    cin >> t;
-    while (t--) {
-        int n;
-        cin >> n >> k;
-        long long a[n];
-        for (auto &x : a)
-            cin >> x;
-        cnt.clear();
-        bool ok = 1;
-        for (auto x : a) {
-            if (x == 0)
-                continue;
-            if (!getPowers(x)) {
-                ok = 0;
-                break;
-            }
-        }
-        if (ok) {
-            for (auto x : cnt)
-                if (x.second > 1) {
-                    ok = 0;
-                    break;
-                }
-        }
-        if (ok)
-            cout << "YES";
-        else
-            cout << "NO";
-        cout << endl;
-    }
-}

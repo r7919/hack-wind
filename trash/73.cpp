@@ -1,83 +1,50 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72821736
-#include <bits/stdc++.h>
-
-#define ll long long
-#define ld long double
-#define pb push_back
-#define pii pair<int, int>
-#define pll pair<ll, ll>
-#define pld pair<ld, ld>
-#define mp make_pair
-#define all(v) v.begin(), v.end()
-#define forn(i, n) for(int i = 0; i < n; i++)
+// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72813157
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#define LL long long 
 using namespace std;
 
-const ll inf = int(1e9 + 7);
-const double eps = 1e-7;
-const int maxn = int(2e5 + 10);
+LL max(LL a,LL b)
+{
+	return a>b?a:b;
+}
 
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
+LL t,n,k,wei[110],mcur;
 
-    int t;
-    cin >> t;
-    while (t--) {
-        int n, k;
-        cin >> n >> k;
-        vector<ll> v(n);
-        forn(i, n) {
-            cin >> v[i];
-        }
 
-        bool ok = true;
-//        bool ed = true;
-//        forn(i, n) {
-//            if((ed && d[i] - 1 % k == 0) || d[i] % k == 0) {
-//                if(ed && d[i] - 1 % k == 0) {
-//                    ed = false;
-//                    v.pb(d[i] - 1);
-//                } else {
-//                    v.pb(d[i]);
-//                }
-//            }
-//            else {
-//                ok = false;
-//                break;
-//            }
-//        }
-//
-//        if(!ok) {
-//            cout << "NO" << endl;
-//            continue;
-//        }
-
-        unordered_set<int> s;
-        for(int i = 0; i < v.size() && ok; i++) {
-            ll cur = v[i];
-            int cnt = 0;
-            while(cur > 0) {
-                while(cur % k == 0) {
-                    cur /= k;
-                    cnt++;
-                }
-                if(s.count(cnt) > 0) {
-                    ok = false;
-                    break;
-                }
-                s.insert(cnt);
-                cur--;
-            }
-        }
-
-        if(!ok) {
-            cout << "NO" << endl;
-            continue;
-        }
-
-        cout << "YES" << endl;
-    }
-
-    return 0;
+int main()
+{
+	scanf("%lld",&t);
+	while(t--)
+	{
+		memset(wei,0,sizeof(wei));
+		mcur=-1;
+		scanf("%lld%lld",&n,&k);
+		for(int i=1;i<=n;i++)
+		{
+			long long tmp;
+			scanf("%lld",&tmp);
+			LL cur=0;
+			while(tmp)
+			{
+				wei[cur++]+=tmp%k;
+				tmp/=k;
+			}
+			mcur=max(mcur,cur);
+		}
+		mcur--;
+		int flag=1;
+		for(int i=0;i<=mcur;i++)
+			if(wei[i]>1)
+			{
+				flag=0;
+				break;
+			}
+		if(flag)
+			printf("YES\n");
+		else printf("NO\n");
+		
+	}
+	return 0;
 }
