@@ -1,88 +1,51 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72817873
-// Problem : C. Adding Powers
-// Contest : Educational Codeforces Round 83 (Rated for Div. 2)
-// URL : https://codeforces.com/contest/1312/problem/C
-// Memory Limit : 256 MB
-// Time Limit : 2000 ms
-// Powered by CP Editor (https://github.com/cpeditor/cpeditor)
-
+// LILY SOURCE:  https://codeforces.com/contest/1324/submission/73040858
 #include<bits/stdc++.h>
 using namespace std;
-#define int         long long
-#define ull 		unsigned long long
-#define ll 			long long
-#define MM			1000000007
-#define N			100005
-#define pb 			push_back
-#define p_q 		priority_queue
-#define pii         pair<ll,ll>
-#define vi          vector<ll>
-#define vii         vector<pii>
-#define mi          map<ll,ll>
-#define mii         map<pii,ll>
-#define all(a)      (a).begin(),(a).end()
-#define sz(x)       (ll)x.size()
-#define endl        '\n'
-#define gcd(a,b)    __gcd((a),(b))
-#define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ios	    	ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-#define mp 			make_pair
-#define lb 			lower_bound
-#define ub			upper_bound
-#define F           first
-#define S           second
-#define rep(i, begin, end) for(int i=begin;i<end;i++)
-#define repr(i,begin,end) for(int i=end-1;i>=begin;i--)
-#define ini(a,n,b)	for(ll int i=0;i<n;i++) a[i]=0;
-#define cset(a)		__builtin_popcountll(a)
-#define hell 		(ull)1e16
-#define re 			resize
+//dengyaotriangle!
 
+const int maxn=200005;
 
+int n;
+int a[maxn];
+vector<int> adj[maxn];
+int dp[maxn],dp2[maxn];
 
-signed main(void)
-{ios
-	int TESTS=1;
-	cin>>TESTS;
-	while(TESTS--)
-	{
-		int n,k;
-		cin>>n>>k;
-		vi v;
-		v.pb(1);
-		int y=k;
-		while(1)
-		{
-			if(y>hell) break;
-			v.pb(y);
-			y=y*k;
-		}
-		vector<bool> brr(100,0);
-		bool ok=1;
-		rep(i,0,n)
-		{
-			int x;
-			cin>>x;
-			if(x!=0)
-			{
-				while(x>0)
-				{
-					int ind=lower_bound(all(v),x)-v.begin();
-					//cout<<ind<<' ';
-					if(v[ind]>x) ind--;
-					if(brr[ind]==1)
-					{
-						ok=0;
-						//ok2=0;
-						break;
-					}
-					brr[ind]=1;
-					x-=v[ind];
-				}
-			}
-		}
-		if(ok) cout<<"YES"<<endl;
-		else cout<<"NO"<<endl;
-	}
-	
+void dfs1(int u,int f){
+    dp[u]=a[u]-(int)!a[u];
+    for(int i=0;i<adj[u].size();i++){
+        int v=adj[u][i];
+        if(v!=f){
+            dfs1(v,u);
+            dp[u]+=max(dp[v],0);
+        }
+    }
+}
+
+void dfs2(int u,int f){
+    int w=max(0,dp2[u])+(a[u]-(int)!a[u]);
+    for(int i=0;i<adj[u].size();i++)if(adj[u][i]!=f)w+=max(0,dp[adj[u][i]]);
+    for(int i=0;i<adj[u].size();i++){
+        int v=adj[u][i];
+        if(v!=f){
+            dp2[v]=max(0,w-max(0,dp[v]));
+            dfs2(v,u);
+        }
+    }
+}
+
+int main(){
+    ios::sync_with_stdio(0);
+    cin>>n;
+    for(int i=1;i<=n;i++)cin>>a[i];
+    for(int i=1;i<n;i++){
+        int u,v;cin>>u>>v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    dfs1(1,0);
+    dfs2(1,0);
+    for(int i=1;i<=n;i++){
+        cout<<dp[i]+dp2[i]<<' ';
+    }
+    return 0;
 }

@@ -93,6 +93,55 @@ ll random(ll a, ll b)
    return x;
 }
 
+ll minKey(ll key[], bool mstSet[], vpll & tree, ll vertices) 
+{ 
+  ll V = vertices;
+  ll min = INT_MAX, min_index = 0; 
+
+  for (ll v = 0; v < V; v++) 
+    if (mstSet[v] == false && key[v] < min) 
+      min = key[v], min_index = v; 
+
+  return min_index; 
+} 
+
+void random_tree(ll vertices, vpll & tree)
+{
+  ll V = vertices;
+  ll graph[V][V];
+  fr(i,V)
+  {
+    fr(j,V)
+    {
+      if(i != j)
+       graph[i][j] = random(10, 1000);
+      else
+       graph[i][j] = INT_MAX;
+    }
+  } 
+  ll parent[V]; 
+  ll key[V]; 
+  bool mstSet[V]; 
+  for (ll i = 0; i < V; i++) 
+  {
+    key[i] = INT_MAX;
+    mstSet[i] = false;  
+  }
+  key[0] = 0; 
+  parent[0] = -1; 
+  for (ll count = 0; count < V - 1; count++) 
+  { 
+    ll u = minKey(key, mstSet, tree, vertices); 
+    mstSet[u] = true; 
+    for (ll v = 0; v < V; v++) 
+      if (graph[u][v] && mstSet[v] == false && graph[u][v] < key[v]) 
+        parent[v] = u, key[v] = graph[u][v]; 
+  } 
+  for (ll i = 1; i < V; i++) 
+  tree.eb(parent[i]+1, i+1); 
+  return;
+}
+
 void shuffle_v(vl & v, ll n)  
 {  
   // Fisher–Yates shuffle Algorithm
@@ -187,12 +236,18 @@ void unique_arr(ll* arr, ll n, ll a, ll b)
 
 void generate()
 {
-  ll n = random(1, 30);
-  ll k = random(2, 100);
-  cout << n << " " << k << '\n';
-  vl v;
-  random_v(v,n,0,1e16);
-  print_v(v,n);
+  ll n = random(2, 20);
+  cout << n << '\n';
+  vl b;
+  random_v(b,n,0,1);
+  print_v(b,n);
+  vpll tree;
+  random_tree(n, tree);
+  // dbg(sz(tree));
+  fr(i,sz(tree))
+  {
+    cout << tree[i].ff << " " << tree[i].ss << '\n';
+  }
 }
 
 signed main()
@@ -210,7 +265,7 @@ signed main()
     //cout<<fixed<<setprecision(15);
 
     ll test = 1;
-    cout<<test<<endl;
+    // cout<<test<<endl;
     fr(ii,test)
     {
       // cout << "Case #" << ii + 1 << ": "<<endl;

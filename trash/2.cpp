@@ -1,31 +1,64 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72816868
-#include <iostream>
+// LILY SOURCE:  https://codeforces.com/contest/1324/submission/73040762
 #include <bits/stdc++.h>
 using namespace std;
 
-int  main() {
-    std::ios::sync_with_stdio(false);
-   int t ; cin >> t; 
-   while (t--){
-       long long  n, k; cin >> n>>k;
-       vector <long long >v;
-       for (int i = 0; i < n; i++){long long  a; cin >> a; v.push_back(a);}
-       map <long long  , bool>map; 
-       bool f = false;
-       for (int i = 0; i < n ; i++){
-           long long  cnt =0;
-           f = false;
-           while (v[i]>0){
-               if (v[i]%k==0){v[i]/=k; cnt++;}
-               else if (v[i]%k==1){
-                   if (map[cnt]){f=1; break;}
-                   else{map[cnt]=1; v[i]--;}
-               }
-               else { f =1;break;}
-           }
-           if (f)break;
-       }
-       if(f){cout << "NO\n"; continue;}
-       cout << "YES\n";
-   }
+const int N = 1234567;
+int n;
+int a[N];
+vector<int> g[N];
+int dp[N];
+int res[N];
+
+void dfs(int u, int p) {
+    dp[u] = a[u];
+    for (int v : g[u]) {
+        if (v != p) {
+            dfs(v, u);
+            dp[u] += max(0, dp[v]);
+        }
+    }
 }
+
+void upd_dfs(int u, int p, int mx) {
+    int sum = a[u] + mx;
+    for (int v : g[u]) {
+        if (v != p) {
+            sum += max(0, dp[v]);
+        }
+    }
+    res[u] = max(res[u], sum);
+    for (int v : g[u]) {
+        if (v != p) {
+            sum -= max(0, dp[v]);
+            upd_dfs(v, u, max(0, sum));
+            sum += max(0, dp[v]);
+        }
+    }
+}
+
+void solve() {
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+        if (!a[i]) a[i] = -1;
+    }
+    for (int i = 0; i < n - 1; i++) {
+        int u, v; cin >> u >> v; u--, v--;
+        g[u].push_back(v);
+        g[v].push_back(u);
+    }
+    fill_n(res, n, -1);
+    dfs(0, -1);
+    upd_dfs(0, -1, 0);
+    for (int i = 0; i < n; i++) {
+        cout << res[i] << " ";
+    }
+    cout << "\n";
+}
+
+int main() {
+    ios_base::sync_with_stdio(0), cin.tie(0);
+    solve();
+    return 0;
+}
+

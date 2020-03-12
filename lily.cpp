@@ -1,54 +1,64 @@
-// LILY SOURCE:  https://codeforces.com/contest/1312/submission/72820352
-#include<bits/stdc++.h>
+// LILY SOURCE:  https://codeforces.com/contest/1324/submission/73040762
+#include <bits/stdc++.h>
 using namespace std;
-int main()
-{
-    int t;
-    cin>>t;
-    while(t--)
-    {
-        int n;
-        long long int k;
-        cin>>n>>k;
-        long long int m=0;
-        long long int e=1;
-        long long int a[31];
-        for(int i=0;i<n;i++)
-        {
-            cin>>a[i];
+
+const int N = 1234567;
+int n;
+int a[N];
+vector<int> g[N];
+int dp[N];
+int res[N];
+
+void dfs(int u, int p) {
+    dp[u] = a[u];
+    for (int v : g[u]) {
+        if (v != p) {
+            dfs(v, u);
+            dp[u] += max(0, dp[v]);
         }
-        bool z=0;
-        for(int i=0;i<n;i++)
-        {
-            for(int o=0;a[i]!=0;o++)
-            {
-                if(a[i]%k==0)
-                {
-                    a[i]=a[i]/k;
-                }
-                else if(a[i]%k==1)
-                {
-                    if(m&(e<<o))
-                    {
-                        z=1;
-                        break;
-                    }
-                    else
-                    {
-                        m|=(e<<o);
-                        a[i]=(a[i]-1)/k;
-                    }
-                }
-                else
-                {
-                    z=1;
-                    break;
-                }
-            }
-            if(z)break;
-        }
-        if(z)cout<<"NO\n";
-        else cout<<"YES\n";
     }
+}
+
+void upd_dfs(int u, int p, int mx) {
+    int sum = a[u] + mx;
+    for (int v : g[u]) {
+        if (v != p) {
+            sum += max(0, dp[v]);
+        }
+    }
+    res[u] = max(res[u], sum);
+    for (int v : g[u]) {
+        if (v != p) {
+            sum -= max(0, dp[v]);
+            upd_dfs(v, u, max(0, sum));
+            sum += max(0, dp[v]);
+        }
+    }
+}
+
+void solve() {
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+        if (!a[i]) a[i] = -1;
+    }
+    for (int i = 0; i < n - 1; i++) {
+        int u, v; cin >> u >> v; u--, v--;
+        g[u].push_back(v);
+        g[v].push_back(u);
+    }
+    fill_n(res, n, -1);
+    dfs(0, -1);
+    upd_dfs(0, -1, 0);
+    for (int i = 0; i < n; i++) {
+        cout << res[i] << " ";
+    }
+    cout << "\n";
+}
+
+int main() {
+    ios_base::sync_with_stdio(0), cin.tie(0);
+    solve();
+    return 0;
 }
 
