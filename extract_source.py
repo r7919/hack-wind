@@ -8,7 +8,7 @@ from bs4 import *
 from urllib.parse import urlparse
 from urllib.parse import urlsplit
 
-all_lines = sum(1 for line in open('out.txt'))
+all_lines = sum(1 for line in open('urls.txt'))
 # EDIT these
 sleep_time = 10
 sleep_freq = 100
@@ -36,7 +36,7 @@ def delete_trash():
 	        print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 delete_trash()
-input_urls = open('out.txt', 'r')
+input_urls = open('urls.txt', 'r')
 sys.stdin = input_urls
 
 till_url_line = min(all_lines,till_url_line)

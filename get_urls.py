@@ -35,7 +35,7 @@ def expected_time(lines):
     add_sl = (float(sleep_time)*float(lines))/(float(sleep_freq)*float(60))
     eprint("Estimated Waiting time... : ",mini+add_sl," minutes ,","Total URLS: ",lines)
 
-urls_file = open('out.txt', 'w')
+urls_file = open('urls.txt', 'w')
 sys.stdout = urls_file
 
 # EDIT these
