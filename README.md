@@ -11,7 +11,7 @@
 
 ## File Description
 
-- This script can be used for random/custom testing, random testing uses `generator.cpp` which generates random inputs for the problem, contains many prewritten functions for generating PRNS, Random tree generator, shuffler. You can write your generator for a particular problem that you are testing.
+- This script can be used for random/custom testing, random testing uses `generator.cpp` which generates random inputs for the problem, contains many prewritten functions for generating PRNS, Random tree generator, shuffler. You can modify generator for a particular problem that you are testing.
 
 - Before executing the script update `generator.cpp` and `correct.cpp` which contains the attacking code (possibly yours) for that problem.
 
