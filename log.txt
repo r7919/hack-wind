@@ -1,3 +1,7 @@
 [1.cpp] [-OK-]
 [2.cpp] [-OK-]
-TOTAL HACKS: 0 
+[3.cpp] [-OK-]
+[4.cpp] [-OK-]
+[5.cpp] [-OK-]
+[6.cpp] [-OK-]
+[7.cpp] 

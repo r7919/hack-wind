@@ -24,8 +24,8 @@ def get_proxies():
             proxies.add(proxy)
     return proxies
 
-sleep_time = 10
-sleep_freq = 1
+sleep_time = 2
+sleep_freq = 100
 
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
@@ -39,26 +39,26 @@ urls_file = open('urls.txt', 'w')
 sys.stdout = urls_file
 
 # EDIT these
-contest_id = 1324
-problem_id = 560265
-page_start = 1
-page_end = 4
+contest_id = 1327
+problem_id = 571324
+page_start = 431
+page_end = 433
 
 x = "https://codeforces.com/contest/"+str(contest_id)+"/standings/page/"
 
 count_accepted = 0
-proxies = get_proxies()
-proxy_pool = cycle(proxies)
+#proxies = get_proxies()
+#proxy_pool = cycle(proxies)
 
 for k in range(page_start,page_end+1):
     
-    proxy = next(proxy_pool)  
+    # proxy = next(proxy_pool)  
     y=str(str(x)+str(k))
     response = requests.get(y) #,proxies={"http": proxy, "https": proxy}
     html = response.content
     soup = BeautifulSoup(html, "html5lib")
     table = soup.find_all(problemid=problem_id)
-    time.sleep(1)
+    #time.sleep(1)
     if ((k % sleep_freq) == 0):
       eprint("Sleeping.....",sleep_time," seconds")
       time.sleep(sleep_time)
@@ -75,3 +75,5 @@ for k in range(page_start,page_end+1):
 eprint("ACCEPTED =",count_accepted)
 extracted = count_accepted
 urls_file.close()
+
+

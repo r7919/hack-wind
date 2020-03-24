@@ -93,6 +93,55 @@ ll random(ll a, ll b)
    return x;
 }
 
+ll minKey(ll key[], bool mstSet[], vpll & tree, ll vertices);
+void random_tree(ll vertices, vpll & tree);
+void shuffle_v(vl & v, ll n);
+void shuffle_arr(ll* arr, ll n);
+void print_arr(ll* arr, ll n);
+void random_arr(ll* arr, ll n, ll a, ll b);
+void unique_v(vl & v, ll n, ll a, ll b);
+void unique_arr(ll* arr, ll n, ll a, ll b);
+void random_v(vl & v, ll n, ll a, ll b);
+void print_v(vl & v, ll n);
+
+
+void generate()
+{
+  ll n = random(1, 10);
+  ll m = random(1, 10);
+  cout << n <<" "<< m << '\n';
+}
+
+signed main()
+{  
+    clock_t begin = clock();
+    // srand(atoi(argv[1]);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt", "w", stdout);
+    #endif
+    
+    //cout<<fixed<<setprecision(15);
+
+    ll test = 1;
+    cout<<test<<endl;
+    fr(ii,test)
+    {
+      // cout << "Case #" << ii + 1 << ": "<<endl;
+      generate();
+    }
+
+    clock_t end = clock();
+    double elapsed_secs = (double)(end - begin)/CLOCKS_PER_SEC;
+    dbg_time(elapsed_secs);
+    
+    return 0;
+}  
+
+
 ll minKey(ll key[], bool mstSet[], vpll & tree, ll vertices) 
 { 
   ll V = vertices;
@@ -184,15 +233,6 @@ void print_arr(ll* arr, ll n)
   cout<<endl;
 }
 
-void random_v(vl & v, ll n, ll a, ll b)
-{
-  fr(i,n)
-  {
-    ll x = random(a, b);
-    v.pb(x);
-  }
-}
-
 void random_arr(ll* arr, ll n, ll a, ll b)
 {
   fr(i,n)
@@ -234,47 +274,11 @@ void unique_arr(ll* arr, ll n, ll a, ll b)
   }
 }
 
-void generate()
+void random_v(vl & v, ll n, ll a, ll b)
 {
-  ll n = random(2, 20);
-  cout << n << '\n';
-  vl b;
-  random_v(b,n,0,1);
-  print_v(b,n);
-  vpll tree;
-  random_tree(n, tree);
-  // dbg(sz(tree));
-  fr(i,sz(tree))
+  fr(i,n)
   {
-    cout << tree[i].ff << " " << tree[i].ss << '\n';
+    ll x = random(a, b);
+    v.pb(x);
   }
 }
-
-signed main()
-{  
-    clock_t begin = clock();
-    // srand(atoi(argv[1]);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-
-    #ifndef ONLINE_JUDGE
-    freopen("input.txt", "w", stdout);
-    #endif
-    
-    //cout<<fixed<<setprecision(15);
-
-    ll test = 1;
-    // cout<<test<<endl;
-    fr(ii,test)
-    {
-      // cout << "Case #" << ii + 1 << ": "<<endl;
-      generate();
-    }
-
-    clock_t end = clock();
-    double elapsed_secs = (double)(end - begin)/CLOCKS_PER_SEC;
-    dbg_time(elapsed_secs);
-    
-    return 0;
-}  

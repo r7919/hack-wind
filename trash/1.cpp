@@ -1,51 +1,35 @@
-// LILY SOURCE:  https://codeforces.com/contest/1324/submission/73040858
+// LILY SOURCE:  https://codeforces.com/contest/1327/submission/74075101
 #include<bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#include <ext/pb_ds/detail/standard_policies.hpp>
+
 using namespace std;
-//dengyaotriangle!
+using namespace __gnu_pbds;
 
-const int maxn=200005;
-
-int n;
-int a[maxn];
-vector<int> adj[maxn];
-int dp[maxn],dp2[maxn];
-
-void dfs1(int u,int f){
-    dp[u]=a[u]-(int)!a[u];
-    for(int i=0;i<adj[u].size();i++){
-        int v=adj[u][i];
-        if(v!=f){
-            dfs1(v,u);
-            dp[u]+=max(dp[v],0);
-        }
-    }
-}
-
-void dfs2(int u,int f){
-    int w=max(0,dp2[u])+(a[u]-(int)!a[u]);
-    for(int i=0;i<adj[u].size();i++)if(adj[u][i]!=f)w+=max(0,dp[adj[u][i]]);
-    for(int i=0;i<adj[u].size();i++){
-        int v=adj[u][i];
-        if(v!=f){
-            dp2[v]=max(0,w-max(0,dp[v]));
-            dfs2(v,u);
-        }
-    }
-}
+#define pb push_back
+#define ll long long
+#define pii pair<int , int>
+#define pli pair<ll , int>
+#define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
+#define N
+#define p 307LL
+#define mod 1000000007LL
 
 int main(){
-    ios::sync_with_stdio(0);
-    cin>>n;
-    for(int i=1;i<=n;i++)cin>>a[i];
-    for(int i=1;i<n;i++){
-        int u,v;cin>>u>>v;
-        adj[u].push_back(v);
-        adj[v].push_back(u);
-    }
-    dfs1(1,0);
-    dfs2(1,0);
-    for(int i=1;i<=n;i++){
-        cout<<dp[i]+dp2[i]<<' ';
+
+    int t;
+    cin >> t;
+    while(t--){
+        ll n, k;
+        cin >> n>>k;
+        if( n < k*k)
+            cout <<"NO\n";
+        else if( (n - (k*k)) % 2){
+            cout <<"NO\n";
+        }else cout <<"YES\n";
     }
     return 0;
 }
+
+

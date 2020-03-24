@@ -1,64 +1,52 @@
-// LILY SOURCE:  https://codeforces.com/contest/1324/submission/73040762
+// LILY SOURCE:  https://codeforces.com/contest/1327/submission/74075247
 #include <bits/stdc++.h>
 using namespace std;
+ 
+typedef long long ll;
+typedef pair<int, int> pi;
+ 
+ 
+typedef vector<int> vi;
+typedef vector<ll> vl;
+typedef vector<pi> vpi;
+ 
+#define rep(i,a) for(int i=0;i<a;i++)
+#define repn(i,a,b) for(int i=a;i<b;i++)
+#define per(i,a,b) for(int i=a;i>b;i--)
 
-const int N = 1234567;
-int n;
-int a[N];
-vector<int> g[N];
-int dp[N];
-int res[N];
+#define endl '\n'
+#define sz(x) (int)(x).size()
+#define mp make_pair
+#define pb push_back
+#define f first
+#define s second
+#define all(x) x.begin(), x.end()
+ 
+const int MOD = 1000000007;
+const ll INF = 1e18;
 
-void dfs(int u, int p) {
-    dp[u] = a[u];
-    for (int v : g[u]) {
-        if (v != p) {
-            dfs(v, u);
-            dp[u] += max(0, dp[v]);
-        }
-    }
+ 
+int main() 
+{
+	ios_base::sync_with_stdio(0); cin.tie(0);
+	int t; cin>>t;
+	while(t--)
+	{
+		int n,k;
+		cin>>n>>k;
+		if(n%2==0 && k<=sqrt(n) && k%2==0)
+		{
+			cout<<"YES"<<endl;
+			continue;
+		}
+		if(n%2==1 && k%2==1 && k<=sqrt(n))
+		{
+			cout<<"YES"<<endl;
+			continue;
+		}
+		cout<<"NO"<<endl;
+	}
+	return 0;
 }
 
-void upd_dfs(int u, int p, int mx) {
-    int sum = a[u] + mx;
-    for (int v : g[u]) {
-        if (v != p) {
-            sum += max(0, dp[v]);
-        }
-    }
-    res[u] = max(res[u], sum);
-    for (int v : g[u]) {
-        if (v != p) {
-            sum -= max(0, dp[v]);
-            upd_dfs(v, u, max(0, sum));
-            sum += max(0, dp[v]);
-        }
-    }
-}
-
-void solve() {
-    cin >> n;
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-        if (!a[i]) a[i] = -1;
-    }
-    for (int i = 0; i < n - 1; i++) {
-        int u, v; cin >> u >> v; u--, v--;
-        g[u].push_back(v);
-        g[v].push_back(u);
-    }
-    fill_n(res, n, -1);
-    dfs(0, -1);
-    upd_dfs(0, -1, 0);
-    for (int i = 0; i < n; i++) {
-        cout << res[i] << " ";
-    }
-    cout << "\n";
-}
-
-int main() {
-    ios_base::sync_with_stdio(0), cin.tie(0);
-    solve();
-    return 0;
-}
 

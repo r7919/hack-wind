@@ -10,8 +10,8 @@ from urllib.parse import urlsplit
 
 all_lines = sum(1 for line in open('urls.txt'))
 # EDIT these
-sleep_time = 10
-sleep_freq = 100
+sleep_time = 5
+sleep_freq = 30
 till_url_line = all_lines
 # till_url_line = 10
 
@@ -51,16 +51,12 @@ for k in range(1,till_url_line+1):
     html = response.content
     soup = BeautifulSoup(html, "html5lib")
     table = soup.find(id="program-source-text")
-    time.sleep(1)
+    # time.sleep(1)
     
     if ((k % sleep_freq) == 0):
       eprint("Sleeping.....",sleep_time," seconds")
       time.sleep(sleep_time)
-
-    if ((k % (2*sleep_freq)) == 0):
-      eprint("Sleeping.....",sleep_time*2," seconds")
-      time.sleep(sleep_time*2)  
-
+      
     s = ""
     if hasattr(table, 'text'):
       s = table.text

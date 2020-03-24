@@ -1,3 +1,4 @@
+python3 animation.py
 cd trash/
 all_files=$(ls -1 | wc -l)
 cd ..
