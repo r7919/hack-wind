@@ -5,7 +5,7 @@
   
 - In hacking, you can view the solution of others. If you think that you have a test case where the code may give the wrong answer.   Just click on the hack and provide your test case.
 
-- After the end of the **Educational Rounds /  (Div. 3) rounds** there will be an 11-hour period of open hacks — any visitor of Codeforces may try to hack any complete solution to a problem of the last round (either from a contest, or practice), the source code of hacking solution is available (you can copy the text and, for example, stress it).
+- After the end of the **Educational Rounds /  (Div. 3) rounds** there will be an 12-hour period of open hacks — any visitor of Codeforces may try to hack any complete solution to a problem of the last round (either from a contest, or practice), the source code of hacking solution is available (you can copy the text and, for example, stress it).
 
 - This script helps in automating that process by scraping and extracting all the submissions of a particular problem and testing it on your local Linux machine.
 
