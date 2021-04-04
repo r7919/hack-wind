@@ -1,4 +1,4 @@
-# Hack-Wind
+# hack-Wind
 
 - Codeforces has a feature of hacking, during contests. Here hacking doesn’t mean illegitimately breaking into a computer 
   system.
