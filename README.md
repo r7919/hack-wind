@@ -48,9 +48,7 @@
 
 ## Contributing    
 
-- Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change and add.
-
-- Please make sure to update the tests as appropriate.    
+- Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change and add.   
 
 ## References 
 
