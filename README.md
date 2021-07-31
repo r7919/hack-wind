@@ -24,7 +24,7 @@
 #### STEP 0
 
 - Clone this repository to your local Linux machine and update `generator.cpp` and `correct.cpp` for that problem.
-- Run `git clone https://github.com/ubc-123/Lily-forces.git`
+- Run `git clone https://github.com/ubc-123/hack-Wind.git`
 
 #### STEP 1 
 
