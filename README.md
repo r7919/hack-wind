@@ -9,8 +9,6 @@
 
 - This script helps in automating that process by scraping and extracting all the submissions of a particular problem and testing it on your local Linux machine.
 
-- Tested in [Educational Codeforces Round 101](https://codeforces.com/blog/entry/86004).
-
 ## File Description
 
 - This script can be used for random/custom testing, random testing uses `generator.cpp` which generates random inputs for the problem, contains many prewritten functions for generating PRNS, Random tree generator, shuffler. You can modify generator for a particular problem that you are testing.
